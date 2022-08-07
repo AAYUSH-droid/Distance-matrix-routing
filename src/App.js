@@ -25,10 +25,20 @@ function App() {
 
     setMap(map);
 
-    const element = document.createElement("div");
-    element.className = "marker";
+    // const element = document.createElement("div");
+    // element.className = "marker";
 
     const addMarker = () => {
+      const popupOffest = {
+        bottom: [0, -25], //this is popup message above marker
+      };
+      const popup = new tt.Popup({ offset: popupOffest }).setHTML(
+        "This is you!"
+      );
+
+      const element = document.createElement("div");
+      element.className = "marker";
+
       const marker = new tt.Marker({
         draggable: true,
         element: element,
@@ -43,6 +53,7 @@ function App() {
         //lng lat on dragging updates longitude latitude
         // console.log(lnglat);
       });
+      marker.setPopup(popup).togglePopup();
     };
 
     addMarker();
