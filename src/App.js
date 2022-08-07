@@ -1,6 +1,7 @@
-import { useEffect, useState, useRef } from "react";
-import "./App.css";
+import React, { useEffect, useState, useRef } from "react";
 import * as tt from "@tomtom-international/web-sdk-maps";
+import * as ttapi from "@tomtom-international/web-sdk-services";
+import "./App.css";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
 
 function App() {
@@ -8,10 +9,35 @@ function App() {
   const [map, setMap] = useState({});
   const [longitude, setLongitude] = useState(-0.112869);
   const [latitude, setLatitude] = useState(51.504);
-  // const longitude = -0.112869;
-  // const latitude = 51.504;
+
+  const convertToPoints = (lngLat) => {
+    return {
+      point: {
+        latitude: lngLat.lat,
+        longitude: lngLat.lng,
+      },
+    };
+  };
+
+  //adding a delievery marker
+  const addDeliveryMarker = (lngLat, map) => {
+    const element = document.createElement("div");
+    element.className = "marker-delivery";
+    new tt.Marker({
+      element: element,
+    })
+      .setLngLat(lngLat)
+      .addTo(map);
+  };
 
   useEffect(() => {
+    const origin = {
+      lng: longitude,
+      lat: latitude,
+    };
+
+    const destinations = [];
+
     let map = tt.map({
       key: process.env.REACT_APP_TOM_TOM_API_KEY,
       container: mapElement.current,
@@ -20,7 +46,7 @@ function App() {
         trafficFlow: true,
       },
       center: [longitude, latitude],
-      zoom: 14,
+      zoom: 14, //(14)
     });
 
     setMap(map);
@@ -57,6 +83,21 @@ function App() {
     };
 
     addMarker();
+
+    // const pointsForDestinations = locations.map
+    // const callParameters = {
+    //   key:process.env.REACT_APP_TOM_TOM_API_KEY,
+    //   destinations: pointsForDestinations,
+    //   origins: [convertToPoints(origin)],
+    // }
+    // return new Promise((resolve, reject) => {
+    //   ttapi.services.matrixRouting(callParameters);
+    // });
+
+    map.on("click", (e) => {
+      destinations.push(e.lngLat);
+      addDeliveryMarker(e.lngLat, map);
+    });
 
     return () => map.remove();
   }, [longitude, latitude]);
