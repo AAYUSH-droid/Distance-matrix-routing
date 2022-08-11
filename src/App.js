@@ -10,6 +10,7 @@ function App() {
   const [longitude, setLongitude] = useState(-0.112869);
   const [latitude, setLatitude] = useState(51.504);
 
+  //lanLat conversion
   const convertToPoints = (lngLat) => {
     return {
       point: {
@@ -192,3 +193,9 @@ function App() {
 }
 
 export default App;
+
+//map api
+//git check
+//vjndjkn
+
+//jndvkn
