@@ -197,5 +197,3 @@ export default App;
 //map api
 //git check
 //vjndjkn
-
-//jndvkn
