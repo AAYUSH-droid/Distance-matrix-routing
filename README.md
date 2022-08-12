@@ -1,6 +1,7 @@
 ## Distance Matrix Routing.
 
-Matrix Routing, is what we will be using to optimise our multiple deliveries by travel time.
+Matrix Routing, is used to optimise our multiple deliveries by travel time.
+It calculates the shortest distance from each drop off spot.
 
 We are going to be using TomTom Map SDK for Web, to show us the best route for us as the delivery driver, to drop off all three deliveries based on time, taking:
 
